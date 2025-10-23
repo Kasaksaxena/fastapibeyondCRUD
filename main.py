@@ -1,6 +1,6 @@
 from fastapi import FastAPI,Header,status,HTTPException
 from typing import Optional,List
-from schema import BookCreateModel,Book,BookUpdateModel
+from src.books.schema import BookCreateModel,Book,BookUpdateModel
 
 app=FastAPI()
 
