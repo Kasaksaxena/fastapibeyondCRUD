@@ -1,0 +1,10 @@
+# .gitignore
+
+# Environment variables
+.env
+
+# Virtual environment folder (adjust name if yours is different)
+venv/
+__pycache__/
+*.pyc
+*.pyo

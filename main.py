@@ -2,7 +2,15 @@ from fastapi import FastAPI,Header,status,HTTPException
 from typing import Optional,List
 from src.books.schema import BookCreateModel,Book,BookUpdateModel
 
-app=FastAPI()
+from contextlib import asynccontextmanager
+
+@asynccontextmanager
+async def lifespan(app:FastAPI):
+    print("App is starting up...")
+    yield
+    print("App is shutting down...")
+    
+app=FastAPI(lifespan=lifespan)
 
 BOOKS = [
     {
