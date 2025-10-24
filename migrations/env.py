@@ -7,7 +7,8 @@ from sqlalchemy.ext.asyncio import async_engine_from_config
 from sqlmodel import SQLModel # Import SQLModel base
 from src.books.models import Book
 from alembic import context
-
+import os
+from dotenv import load_dotenv # Import if needed
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
 config = context.config
@@ -28,7 +29,18 @@ target_metadata = SQLModel.metadata
 # can be acquired:
 # my_important_option = config.get_main_option("my_important_option")
 # ... etc.
+# Load .env file (place this early in the script)
+load_dotenv(dotenv_path=os.path.join(os.path.dirname(__file__), '..', '.env')) # Adjust path if needed
 
+# ... existing Alembic config setup ...
+
+# Get URL from environment instead of alembic.ini
+db_url = os.environ.get("DATABASE_URL")
+if not db_url:
+    raise ValueError("DATABASE_URL environment variable not set")
+
+from sqlalchemy.ext.asyncio import create_async_engine
+connectable = create_async_engine(db_url, poolclass=pool.NullPool)
 
 def run_migrations_offline() -> None:
     """Run migrations in 'offline' mode.
