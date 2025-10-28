@@ -12,6 +12,7 @@ from contextlib import asynccontextmanager
 
 from .books.routes import book_router
 
+from .auth.routes import auth_router
 # --- Lifespan (Optional: Good for connection pool management) ---
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -47,8 +48,9 @@ app.include_router(
 # from .users.routes import user_router
 # app.include_router(user_router, prefix="/api/v1/users", tags=["Users"])
 
-
 # Optional: Add a root endpoint for basic check
 @app.get("/api/v1", tags=["Root"])
 async def read_root():
     return {"message": "Welcome to the Bookly API!"}
+
+app.include_router(auth_router, prefix="/api/v1/auth", tags=["Authentication"])
